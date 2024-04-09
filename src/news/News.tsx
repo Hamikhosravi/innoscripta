@@ -1,6 +1,7 @@
 import {useEffect} from 'react';
 import {useNewsApiData} from '../hooks/useNewsApiData.ts';
 import Button from '@mui/material/Button';
+import New from './New.tsx'
 
 export default function News() {
     const {mutate, isLoading, data} = useNewsApiData();
@@ -49,15 +50,7 @@ export default function News() {
         <>
             {/*<Button onClick={postData}>click</Button>*/}
             {isLoading && <div>Loading...</div>}
-            {data && <ul>
-                {data.data.articles.results.map((article)=>(
-                    <li key={article.uri}>
-                        <div>{article.uri}</div>
-                    </li>
-                ))}
-            </ul>}
-
-
+            {data && <New articles={data.data.articles.results}/>}
         </>
     );
 
