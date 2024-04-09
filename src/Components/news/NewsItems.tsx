@@ -1,9 +1,12 @@
 import {useEffect} from 'react';
-import {useNewsApiData} from '../hooks/useNewsApiData.ts';
+import {useNewsApiData} from '../../hooks/useNewsApiData';
+import {useAppDispatch} from '../../hooks/useStore';
+import {pushNews} from '../../store/news-slice'
 import Button from '@mui/material/Button';
-import New from './New.tsx'
+import NewsItem from './NewsItem.js'
 
-export default function News() {
+export default function NewsItems() {
+    const dispatch = useAppDispatch();
     const {mutate, isLoading, data} = useNewsApiData();
 
     useEffect(() => {
@@ -36,6 +39,7 @@ export default function News() {
                 }, {
                     onSuccess: (data) => {
                         console.log('Data:', data.data.articles);
+                        dispatch(pushNews(data.data.articles.results))
                     },
                 });
             } catch (error) {
@@ -50,7 +54,7 @@ export default function News() {
         <>
             {/*<Button onClick={postData}>click</Button>*/}
             {isLoading && <div>Loading...</div>}
-            {data && <New articles={data.data.articles.results}/>}
+            {data && <NewsItem items="allNews" />}
         </>
     );
 
