@@ -19,7 +19,7 @@ export default function NewsItem({items}: string) {
         }
     });
     const dispatch = useAppDispatch();
-    dispatch(selectedItems(checkedItems))
+    dispatch(selectedItems(checkedItems));
     const handleChange = (article: Article) => {
         const articleIndex = checkedItems.findIndex((item) => item.uri === article.uri);
         if (articleIndex === -1) {
@@ -36,8 +36,8 @@ export default function NewsItem({items}: string) {
         <Box sx={{flexGrow: 1}}>
             <Grid container spacing={2}>
                 {articles.map((article) => (
-                    <Grid xs={12} sm={6} md={4} lg={3} key={article.uri} item>
-                        <FormControlLabel
+                    <Grid xs={12} sm={6} md={4} lg={3} key={article.uri} item sx={{ display: 'flex', justifyContent: 'center'}}>
+                        <FormControlLabel sx={{margin: "0"}}
                             control={
                                 <Checkbox
                                     checked={checkedItems.find((item) => item.uri === article.uri) ? true : false}
