@@ -1,9 +1,23 @@
+import { useState } from 'react';
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
+import { useAppDispatch } from "../../hooks/useStore";
+import { searchBox } from "../../store/filtered-slice";
 
 export default function SearchBox() {
-    return(
+    const [searchInput, setSearchInput] = useState<string>("");
+    const dispatch = useAppDispatch();
+
+    function searchHandler(event: React.ChangeEvent<HTMLInputElement>) {
+        setSearchInput(event.target.value);
+    }
+
+    function handleSearch() {
+        dispatch(searchBox(searchInput));
+    }
+
+    return (
         <TextField
             size="small"
             label="Search"
@@ -21,6 +35,9 @@ export default function SearchBox() {
             InputProps={{
                 startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
             }}
+            onChange={searchHandler}
+            onBlur={handleSearch} // Dispatch action when focus is lost from the input field
+            value={searchInput}
         />
     );
 }
