@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import HamburgerMenu from "./HamburgerMenu";
 import SearchBox from "./SearchBox";
-import BasicDateRangePicker from "./DatePicker"
+import DateRangePickerWithIcon from "./DatePicker"
 
 
 const Header = () => {
@@ -14,7 +14,7 @@ return (
                 <HamburgerMenu />
                 <Box sx={{ flexGrow: 1 }} />
                 <SearchBox />
-                <BasicDateRangePicker />
+                <DateRangePickerWithIcon />
                 {/*<Filter />*/}
             </Toolbar>
         </AppBar>

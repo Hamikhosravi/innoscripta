@@ -1,43 +1,77 @@
-import * as React from 'react';
-import { Dayjs } from 'dayjs';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateRangePicker, DateRange } from '@mui/x-date-pickers-pro/DateRangePicker';
+import React, { useState } from 'react';
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+import { IconButton, Modal, Box } from '@mui/material';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
-export default function BasicDateRangePicker() {
-    const [value, setValue] = React.useState<DateRange<Dayjs>>([null, null]);
+const DateRangePickerWithIcon = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [dateRange, setDateRange] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: 'selection'
+        }
+    ]);
+    console.log('dateRange', dateRange);
+
+    const handleIconClick = () => {
+        setShowModal(true);
+    };
+
+    const handleSelect = (ranges) => {
+        // Update state with selected date range
+        setDateRange([ranges.selection]);
+        // Do not close the modal after selecting dates
+        // setShowModal(false);
+        // Handle the date change
+        console.log('Selected date range:', ranges.selection);
+    };
+
+    const formatDate = (date) => {
+        return date.toISOString().split('T')[0]; // Extract YYYY-MM-DD from ISO format
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        console.log("yessssss", formatDate(dateRange[0].endDate));
+    }
+
 
     return (
-        <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            localeText={{ start: 'Check-in', end: 'Check-out' }}
-        >
-            <DateRangePicker
-                value={value}
-                onChange={(newValue) => {
-                    setValue(newValue);
+        <div>
+            <IconButton onClick={handleIconClick}>
+                <CalendarTodayIcon />
+            </IconButton>
+            <Modal
+                open={showModal}
+                onClose={closeModal}
+                aria-labelledby="date-range-modal"
+                aria-describedby="select-date-range"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'auto'
                 }}
-                renderInput={(startProps, endProps) => (
-                    <React.Fragment>
-                        <TextField {...startProps} />
-                        <Box sx={{ mx: 2 }}> to </Box>
-                        <TextField {...endProps} />
-                    </React.Fragment>
-                )}
-            />
-        </LocalizationProvider>
+            >
+                <Box sx={{
+                    width: 'auto', // Adjust the width as needed
+                    maxHeight: '80vh', // Adjust the height as needed
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <DateRangePicker
+                        ranges={dateRange}
+                        onChange={handleSelect}
+                        maxDate={new Date()} // Disable future dates
+                    />
+                </Box>
+            </Modal>
+        </div>
     );
-}
+};
 
-
-// <DateRangePicker
-//     open={open}
-//     onOpen={() => setOpen(true)}
-//     onClose={() => setOpen(false)}
-//     onChange={handleDateChange}
-//     startText="Check-in"
-//     endText="Check-out"
-//     value={[startDate, endDate]}
-// />
+export default DateRangePickerWithIcon;
