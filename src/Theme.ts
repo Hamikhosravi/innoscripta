@@ -30,7 +30,7 @@ const theme = createTheme({
         },
         secondary: {
             light: '#ff7961',
-            main: '#ffffff',
+            main: '#1f9cff',
             dark: '#ba000d',
             contrastText: '#000',
         },

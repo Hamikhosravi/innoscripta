@@ -1,8 +1,13 @@
-import {createSlice, payloadAction} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState: string = {
+type Filter = {
+    letter: string;
+    subject: string
+}
+
+const initialState: Filter = {
     letters: "",
-    subject:""
+    subject:"Arts"
 };
 
 export const filteredSlice = createSlice({
@@ -11,17 +16,17 @@ export const filteredSlice = createSlice({
     reducers: {
         searchBox(
             state,
-            action: payloadAction<string>
+            action: PayloadAction<string>
         ) {
             state.letters = action.payload
         },
-        selectSubject(
+        selectedSubject(
             state,
-            action: payloadAction<string>
+            action: PayloadAction<string>
         ) {
             state.subject = action.payload
         }
     }
 });
 
-export const {searchBox, selectSubject} = filteredSlice.actions;
+export const {searchBox, selectedSubject} = filteredSlice.actions;

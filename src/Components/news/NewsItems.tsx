@@ -1,61 +1,28 @@
-import {useEffect} from 'react';
-import {useNewsApiData} from '../../hooks/useNewsApiData';
-import {useAppDispatch} from '../../hooks/useStore';
-import {pushNews} from '../../store/news-slice'
-import Button from '@mui/material/Button';
-import NewsItem from './NewsItem.js'
+// NewsItems.tsx
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
+import { pushNews } from '../../store/news-slice';
+import { useNewsApiData } from '../../hooks/useNewsApiData';
+import NewsItem from './NewsItem.js';
+import LinearProgress from '@mui/material/LinearProgress';
 
 export default function NewsItems() {
     const dispatch = useAppDispatch();
-    const {mutate, isLoading, data} = useNewsApiData();
+    const categoryQuery = useAppSelector(state => state.filtered.subject); // Get categoryQuery from the store
+    const { isLoading, data } = useNewsApiData(categoryQuery); // Pass categoryQuery to useNewsApiData
 
     useEffect(() => {
-        const newsApiFetchData = async () => {
-            try {
-                await mutate({
-                    "query": {
-                        "$query": {
-                            "$and": [
-                                {
-                                    "$or": [
-                                        {
-                                            "categoryUri": "dmoz/Arts"
-                                        },
-                                        {
-                                            "categoryUri": "dmoz/Business"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "dateStart": "2024-02-08",
-                                    "dateEnd": "2024-04-08"
-                                }
-                            ]
-                        }
-                    },
-                    "resultType": "articles",
-                    "articlesSortBy": "date",
-                    "apiKey": "846d1bd4-02ac-4b66-9baf-e5ab0f9be0e7"
-                }, {
-                    onSuccess: (data) => {
-                        console.log('Data:', data.data.articles);
-                        dispatch(pushNews(data.data.articles.results))
-                    },
-                });
-            } catch (error) {
-                console.error('Error posting data:', error);
-            }
-
-        };
-        newsApiFetchData(); // Call the function to trigger mutation on mount
-    }, [mutate]);
+        if (data) {
+            console.log(data)
+            // Push fetched data to the store when data is available
+            dispatch(pushNews(data));
+        }
+    }, [data, dispatch]);
 
     return (
         <>
-            {/*<Button onClick={postData}>click</Button>*/}
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <LinearProgress />}
             {data && <NewsItem items="allNews" />}
         </>
     );
-
 }

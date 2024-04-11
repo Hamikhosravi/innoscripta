@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
-import { selectedItems } from "../../store/selectedNews-slice";
+import { selectedItems } from "../../store/news-slice";
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -10,24 +10,30 @@ import Article from '../../Type/NewsType.js';
 import "./newsItem.css";
 import useFilteredNews from "../../hooks/useFilteredNews";
 
-export default function NewsItem({ items }:string ) {
-    const [checkedItems, setCheckedItems] = useState<Article[]>([]);
+interface Props {
+    items: 'allNews' | 'selectedNews'; // Specify the type of items
+}
+
+export default function NewsItem({ items }: Props) {
+    const selectedNews = useAppSelector(state => state.news.selectedArticles);
+    const [checkedItems, setCheckedItems] = useState<Article[]>(selectedNews || []);
+
     const searchQuery = useAppSelector(state => state.filtered.letters);
     const dispatch = useAppDispatch();
-
+    // console.log("new", useAppSelector(state => state.selectedNews.articles);)
     // Fetching articles based on items
     const articles = useAppSelector((state) => {
         if (items === "allNews") {
             return useFilteredNews(state.news.articles, searchQuery);
         } else if (items === "selectedNews") {
-            return useFilteredNews(state.news.articles, searchQuery);
+            return useFilteredNews(state.news.selectedArticles, searchQuery);
         }
         return [];
     });
 
     // Dispatch selected items
     useEffect(() => {
-        dispatch(selectedItems(checkedItems));
+            dispatch(selectedItems(checkedItems));
     }, [checkedItems, dispatch]);
 
     // Handle checkbox change
@@ -43,7 +49,7 @@ export default function NewsItem({ items }:string ) {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, marginTop:"80px"}}>
             <Grid container spacing={2}>
                 {articles.map((article) => (
                     <Grid xs={12} sm={6} md={4} lg={3} key={article.uri} item sx={{ display: 'flex', justifyContent: 'center' }}>

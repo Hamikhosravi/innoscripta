@@ -1,20 +1,27 @@
-import {createSlice, payloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Article from '../Type/NewsType';
 
-const initialState: Article[] = {
-    articles: []
+interface NewsState {
+    articles: Article[];
+    selectedArticles: Article[];
+}
+
+const initialState: NewsState = {
+    articles: [],
+    selectedArticles: []
 };
 
 export const newsSlice = createSlice({
     name: 'news',
     initialState,
     reducers: {
-        pushNews(
-            state,
-            action: payloadAction<Article[]>
-        ) {
-            state.articles = [...action.payload]
+        pushNews(state, action: PayloadAction<Article[]>) {
+            state.articles = action.payload;
+        },
+        selectedItems(state, action: PayloadAction<Article[]>) {
+            state.selectedArticles = action.payload;
         }
     }
 });
-export const {pushNews} = newsSlice.actions;
+
+export const { pushNews, selectedItems } = newsSlice.actions;
