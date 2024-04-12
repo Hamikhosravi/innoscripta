@@ -7,6 +7,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import {useAppDispatch} from "../../hooks/useStore";
 import {pickedDates} from "../../store/filtered-slice";
 import formatDate from "../../plugins/changeDateFormat";
+import "./DatePicker.css"
 
 
 const DateRangePickerWithIcon = () => {
