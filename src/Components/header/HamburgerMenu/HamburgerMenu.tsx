@@ -1,9 +1,11 @@
 import {useState} from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
-import {useNavigate, useLocation} from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
+import Filter from "../CategoryFilter/Filter";
+import {useNavigate, useLocation} from "react-router-dom";
+import TextField from "@mui/material/TextField";
 
 export default function HamburgerMenu() {
     const location = useLocation();
@@ -30,7 +32,10 @@ export default function HamburgerMenu() {
                 edge="start"
                 color="inherit"
                 aria-label="open drawer"
-                sx={{mr: 2}}
+                sx={{
+                    mr: 2,
+                    '&:focus': { outline: "unset" }
+                }}
                 onClick={handleMenuOpen}
             >
                 <MenuIcon/>
@@ -50,6 +55,10 @@ export default function HamburgerMenu() {
                         Customized News Page
                     </MenuItem>
                 )}
+                {/* Render the Filter component as a menu item only on mobile devices */}
+                <MenuItem sx={{display: {xs: "block", sm: "none"}}}>
+                    <Filter/>
+                </MenuItem>
             </Menu>
         </>
     );

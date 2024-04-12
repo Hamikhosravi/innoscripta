@@ -4,10 +4,10 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useAppDispatch } from "../../hooks/useStore";
-import { selectedSubject } from "../../store/filtered-slice";
+import { useAppDispatch } from "../../../hooks/useStore";
+import { selectedSubject } from "../../../store/filtered-slice";
 
-export default function Filter() {
+export default function Filter({className}:string) {
     const dispatch = useAppDispatch();
     const [category, setCategory] = useState('Arts');
     const location = useLocation();
@@ -25,7 +25,7 @@ export default function Filter() {
     };
 
     return (
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <FormControl className={className} sx={{ mx: {sm: 1}, minWidth: {sm: "227px"}, width: { xs: "100%", sm: "auto" } }} size="small">
             <InputLabel id="select">Category</InputLabel>
             <Select
                 labelId="select"

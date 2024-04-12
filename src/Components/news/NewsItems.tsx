@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { pushNews } from '../../store/news-slice';
 import { useNewsApiData } from '../../hooks/useNewsApiData';
-import NewsItem from './NewsItem.js';
+import NewsItem from './NewsItem/NewsItem';
 import LinearProgress from '@mui/material/LinearProgress';
 
 export default function NewsItems() {

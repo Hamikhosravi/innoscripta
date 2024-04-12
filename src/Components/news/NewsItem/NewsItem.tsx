@@ -1,14 +1,14 @@
 import {useState, useEffect, memo, useMemo} from 'react';
-import {useAppDispatch, useAppSelector} from "../../hooks/useStore";
-import {selectedItems} from "../../store/news-slice";
+import {useAppDispatch, useAppSelector} from "../../../hooks/useStore";
+import {selectedItems} from "../../../store/news-slice";
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Article from '../../Type/NewsType.js';
+import Article from '../../../Type/NewsType.js';
 import "./newsItem.css";
-import useFilteredNews from "../../hooks/useFilteredNews";
+import useFilteredNews from "../../../hooks/useFilteredNews";
 
 interface Props {
     items: 'allNews' | 'selectedNews'; // Specify the type of items
@@ -51,12 +51,13 @@ const NewsItem = memo(({items}: Props) => {
     };
 
     return (
-        <Box sx={{flexGrow: 1, marginTop: "80px"}}>
+        <Box sx={{flexGrow: 1, marginTop: "80px", backgroundColor:"steelblue"}}>
             <Grid container spacing={2}>
                 {articles.map((article) => (
                     <Grid xs={12} sm={6} md={4} lg={3} key={article.uri} item
                           sx={{display: 'flex', justifyContent: 'center'}}>
                         <FormControlLabel
+                            sx={{m:0}}
                             control={
                                 <Checkbox
                                     checked={checkedItems.find((item) => item.uri === article.uri) ? true : false}

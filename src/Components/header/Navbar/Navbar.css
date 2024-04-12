@@ -1,0 +1,5 @@
+@media screen and (max-width: 600px) {
+    .filter {
+        display: none !important; /* Hide the Navbar Filter on mobile */
+    }
+}

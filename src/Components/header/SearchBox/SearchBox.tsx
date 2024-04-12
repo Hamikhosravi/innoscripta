@@ -2,8 +2,8 @@ import {useState} from 'react';
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
-import {useAppDispatch} from "../../hooks/useStore";
-import {searchBox} from "../../store/filtered-slice";
+import {useAppDispatch} from "../../../hooks/useStore";
+import {searchBox} from "../../../store/filtered-slice";
 
 export default function SearchBox() {
     const [searchInput, setSearchInput] = useState<string>("");

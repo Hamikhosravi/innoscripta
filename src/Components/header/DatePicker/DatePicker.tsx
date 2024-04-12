@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {DateRangePicker} from 'react-date-range';
+import React, { useState } from 'react';
+import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import {IconButton, Modal, Box} from '@mui/material';
+import { IconButton, Modal, Box } from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import {useAppDispatch} from "../../hooks/useStore";
-import {pickedDates} from "../../store/filtered-slice";
-import formatDate from "../../plugins/changeDateFormat";
+import CloseIcon from '@mui/icons-material/Close'; // Import CloseIcon
+import { useAppDispatch } from "../../../hooks/useStore";
+import { pickedDates } from "../../../store/filtered-slice";
+import formatDate from "../../../plugins/changeDateFormat";
 import "./DatePicker.css"
-
 
 const DateRangePickerWithIcon = () => {
     const dispatch = useAppDispatch();
@@ -20,7 +20,6 @@ const DateRangePickerWithIcon = () => {
             key: 'selection'
         }
     ]);
-    console.log('dateRange', dateRange);
 
     const handleIconClick = () => {
         setShowModal(true);
@@ -35,19 +34,17 @@ const DateRangePickerWithIcon = () => {
         console.log('Selected date range:', ranges.selection);
     };
 
-
     const closeModal = () => {
         setShowModal(false);
         const startDate = formatDate(dateRange[0].startDate);
         const endDate = formatDate(dateRange[0].endDate);
-        dispatch(pickedDates({startDate, endDate}))
+        dispatch(pickedDates({ startDate, endDate }))
     }
-
 
     return (
         <div>
-            <IconButton onClick={handleIconClick}>
-                <CalendarTodayIcon/>
+            <IconButton onClick={handleIconClick} sx={{ '&:focus': { outline: "unset" } }}>
+                <CalendarTodayIcon />
             </IconButton>
             <Modal
                 open={showModal}
@@ -66,8 +63,16 @@ const DateRangePickerWithIcon = () => {
                     maxHeight: '80vh', // Adjust the height as needed
                     bgcolor: 'background.paper',
                     boxShadow: 24,
+                    position: "relative",
                     p: 4,
                 }}>
+                    <IconButton
+                        aria-label="close"
+                        onClick={closeModal}
+                        sx={{ position: 'absolute', right: 0, top: 0, zIndex: 1 }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
                     <DateRangePicker
                         ranges={dateRange}
                         onChange={handleSelect}

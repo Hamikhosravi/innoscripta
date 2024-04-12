@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import LinearProgress from '@mui/material/LinearProgress';
 
 const NewsItems = lazy(() => import('./Components/news/NewsItems'));
-const NewsItem = lazy(() => import('./Components/news/NewsItem'));
+const NewsItem = lazy(() => import('./Components/news/NewsItem/NewsItem'));
 
 export default function RoutesPath() {
     return (
