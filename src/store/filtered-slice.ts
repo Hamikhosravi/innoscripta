@@ -1,13 +1,17 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {DatesPicker} from "../Type/DatesPicker";
+
 
 type Filter = {
     letter: string;
-    subject: string
+    subject: string;
+    dates: DatesPicker
 }
 
 const initialState: Filter = {
     letters: "",
-    subject:"Arts"
+    subject:"Arts",
+    dates:{}
 };
 
 export const filteredSlice = createSlice({
@@ -25,8 +29,14 @@ export const filteredSlice = createSlice({
             action: PayloadAction<string>
         ) {
             state.subject = action.payload
+        },
+        pickedDates(
+            state,
+            action: PayloadAction<DatesPicker>
+        ) {
+            state.dates = action.payload
         }
     }
 });
 
-export const {searchBox, selectedSubject} = filteredSlice.actions;
+export const {searchBox, selectedSubject, pickedDates} = filteredSlice.actions;

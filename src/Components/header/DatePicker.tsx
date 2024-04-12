@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { DateRangePicker } from 'react-date-range';
+import React, {useState} from 'react';
+import {DateRangePicker} from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { IconButton, Modal, Box } from '@mui/material';
+import {IconButton, Modal, Box} from '@mui/material';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import {useAppDispatch} from "../../hooks/useStore";
+import {pickedDates} from "../../store/filtered-slice";
+import formatDate from "../../plugins/changeDateFormat";
+
 
 const DateRangePickerWithIcon = () => {
+    const dispatch = useAppDispatch();
     const [showModal, setShowModal] = useState(false);
     const [dateRange, setDateRange] = useState([
         {
@@ -29,20 +34,19 @@ const DateRangePickerWithIcon = () => {
         console.log('Selected date range:', ranges.selection);
     };
 
-    const formatDate = (date) => {
-        return date.toISOString().split('T')[0]; // Extract YYYY-MM-DD from ISO format
-    };
 
     const closeModal = () => {
         setShowModal(false);
-        console.log("yessssss", formatDate(dateRange[0].endDate));
+        const startDate = formatDate(dateRange[0].startDate);
+        const endDate = formatDate(dateRange[0].endDate);
+        dispatch(pickedDates({startDate, endDate}))
     }
 
 
     return (
         <div>
             <IconButton onClick={handleIconClick}>
-                <CalendarTodayIcon />
+                <CalendarTodayIcon/>
             </IconButton>
             <Modal
                 open={showModal}

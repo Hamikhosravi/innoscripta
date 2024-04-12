@@ -1,4 +1,3 @@
-// NewsItems.tsx
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { pushNews } from '../../store/news-slice';
@@ -9,7 +8,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 export default function NewsItems() {
     const dispatch = useAppDispatch();
     const categoryQuery = useAppSelector(state => state.filtered.subject); // Get categoryQuery from the store
-    const { isLoading, data } = useNewsApiData(categoryQuery); // Pass categoryQuery to useNewsApiData
+    const dateRange = useAppSelector(state => state.filtered.dates); // Get datesPicker from the store
+
+    const { isLoading, data } = useNewsApiData({categoryQuery, dateRange}); // Pass categoryQuery to useNewsApiData
 
     useEffect(() => {
         if (data) {
