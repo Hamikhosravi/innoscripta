@@ -19,6 +19,7 @@ export default function NewsItem({ items }: Props) {
     const [checkedItems, setCheckedItems] = useState<Article[]>(selectedNews || []);
 
     const searchQuery = useAppSelector(state => state.filtered.letters);
+    const categoryQuery = useAppSelector(state => state.filtered.subject);
     const dispatch = useAppDispatch();
     // console.log("new", useAppSelector(state => state.selectedNews.articles);)
     // Fetching articles based on items
@@ -26,7 +27,7 @@ export default function NewsItem({ items }: Props) {
         if (items === "allNews") {
             return useFilteredNews(state.news.articles, searchQuery);
         } else if (items === "selectedNews") {
-            return useFilteredNews(state.news.selectedArticles, searchQuery);
+            return useFilteredNews(state.news.selectedArticles, searchQuery, categoryQuery);
         }
         return [];
     });
@@ -40,7 +41,7 @@ export default function NewsItem({ items }: Props) {
     const handleChange = (article: Article) => {
         const articleIndex = checkedItems.findIndex((item) => item.uri === article.uri);
         if (articleIndex === -1) {
-            setCheckedItems([...checkedItems, article]);
+            setCheckedItems([...checkedItems, {...article, category : categoryQuery }]);
         } else {
             const updatedCheckedItems = [...checkedItems];
             updatedCheckedItems.splice(articleIndex, 1);
@@ -69,12 +70,13 @@ export default function NewsItem({ items }: Props) {
                                     mx="auto"
                                     display="flex"
                                     sx={{
-                                        border: checkedItems.find((item) => item.uri === article.uri) ? '2px solid green' : '2px solid grey',
+                                        background: checkedItems.find((item) => item.uri === article.uri) ? 'lightGreen' : 'white',
+                                        border: '2px solid grey',
                                         flexDirection: 'column',
                                         transition: '0.2s linear',
                                         overflow: "hidden",
                                         '&:hover': {
-                                            borderColor: checkedItems.find((item) => item.uri === article.uri) ? 'green' : 'blue'
+                                            border: '2px solid blue'
                                         },
                                     }}
                                 >

@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {useLocation} from 'react-router-dom'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -7,8 +8,13 @@ import {useAppDispatch} from "../../hooks/useStore";
 import {selectedSubject} from "../../store/filtered-slice";
 
 export default function Filter() {
-    const [category, setCategory] = useState('Arts');
     const dispatch = useAppDispatch();
+    const [category, setCategory] = useState('Arts');
+    const location = useLocation();
+    if(location.pathname === "/" && category === "All-Selected") {
+        setCategory('Arts');
+        dispatch(selectedSubject("Arts"));
+    }
 
     const handleChange = (event: SelectChangeEvent) => {
         setCategory(event.target.value);
@@ -30,6 +36,7 @@ export default function Filter() {
                 <MenuItem value="Health">Health</MenuItem>
                 <MenuItem value="Home">Home</MenuItem>
                 <MenuItem value="Science">Science</MenuItem>
+                <MenuItem value="All-Selected" sx={{display: location.pathname.includes('customized-news') ? "block" : "none" }}>All-Selected</MenuItem>
             </Select>
         </FormControl>
     );
