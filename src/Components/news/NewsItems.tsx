@@ -20,7 +20,7 @@ export default function NewsItems() {
     }, onSuccess1, onError1); // Pass categoryQuery and dateRange to useNewsApiAIData
 
     const onSuccess2 = (secondApiData) => console.log("fetched second Data", secondApiData);
-    const onError2 = (error) => console.log("ahhhhh");
+    const onError2 = (error) => console.log(error.message);
     const {isLoading: secondLoading, data: secondApiData} = useNewsApiORGData({
         categoryQuery,
         dateRange
