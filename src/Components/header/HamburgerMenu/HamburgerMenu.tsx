@@ -30,7 +30,6 @@ export default function HamburgerMenu() {
             <IconButton
                 size="large"
                 edge="start"
-                color="inherit"
                 aria-label="open drawer"
                 sx={{
                     mr: 2,

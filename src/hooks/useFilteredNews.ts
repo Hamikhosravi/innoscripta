@@ -1,6 +1,8 @@
-import Article from '../../Type/NewsType';
+import {Article, NewsApiOrg , GuardianApi} from '../../interface/NewsType';
 
-export default function useFilteredNews(articles:Article[] | undefined, searchQuery:sting, categoryQuery?: string ) {
+type APITypes = Article | NewsApiOrg | GuardianApi
+
+export default function useFilteredNews(articles:APITypes[] | undefined, searchQuery:sting, categoryQuery?: string ) {
     if (!articles || !Array.isArray(articles)) {
         return [];
     }

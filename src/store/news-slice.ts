@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import Article from '../Type/NewsType';
+import {Article, NewsApiOrg , GuardianApi} from '../interface/NewsType';
+
+type APITypes = Article | NewsApiOrg | GuardianApi
 
 interface NewsState {
-    articles: Article[];
-    selectedArticles: Article[];
+    articles: APITypes[];
+    selectedArticles: APITypes[];
 }
 
 const initialState: NewsState = {
@@ -15,10 +17,10 @@ export const newsSlice = createSlice({
     name: 'news',
     initialState,
     reducers: {
-        pushNews(state, action: PayloadAction<Article[]>) {
+        pushNews(state, action: PayloadAction<APITypes[]>) {
             state.articles = action.payload;
         },
-        selectedItems(state, action: PayloadAction<Article[]>) {
+        selectedItems(state, action: PayloadAction<APITypes[]>) {
             state.selectedArticles = action.payload;
         }
     }

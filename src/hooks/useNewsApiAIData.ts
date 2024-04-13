@@ -1,13 +1,14 @@
 import { useQuery } from "react-Query";
 import { newsApiRequest } from '../utility/axios-utils';
-import {DatePicker} from '../Type/DatesPicker'
+import {DatePicker} from '../interface/DatesPicker'
+import noImage from "../assets/noImage.jpg";
 
 type fetchedDataFilters = {
     categoryQuery: string;
     dateRange: DatePicker
 }
 
-export const useNewsApiData = ({categoryQuery,dateRange}:fetchedDataFilters) => {
+export const useNewsApiAIData = ({categoryQuery,dateRange}:fetchedDataFilters, onSuccess, onError) => {
     const fetchData = async () => {
         const newsApiPost = {
             "query": {
@@ -39,8 +40,15 @@ export const useNewsApiData = ({categoryQuery,dateRange}:fetchedDataFilters) => 
         }
 
         const response = await newsApiRequest({ url: '/', method: 'POST', data: newsApiPost });
-        return response.data.articles.results;
+        const result =  response.data.articles.results;
+        // This Api fetch 100 items and doesn't have any page-size parameter to specify the number of fetch, thus I use slice method
+        const final = result.slice(0, 30).map((item) => ({
+            ...item,
+            id: (item.uri === "" || item.uri === 'https://removed.com') ? Math.random() : item.uri,
+            image: item.image || noImage,
+        }));
+        return final;
     };
 
-    return useQuery(['newsData', categoryQuery, dateRange], fetchData);
+    return useQuery(['newsData', categoryQuery, dateRange], fetchData, {onSuccess, onError});
 };
