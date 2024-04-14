@@ -1,5 +1,6 @@
 export interface Article {
     id: string | number;
+    apiSource: string;
     uri: string;
     lang: string;
     isDuplicate: boolean;
@@ -38,18 +39,19 @@ interface Source {
 // ------------------------------------------
 
 export interface NewsApiOrg {
-    id:          string | number;
-    source:      SourceNewsApiOrg;
-    author:      string;
-    title:       string;
+    id: string | number;
+    apiSource: string;
+    source: SourceNewsApiOrg;
+    author: string;
+    title: string;
     description: string;
-    url:         string;
-    urlToImage:  string;
+    url: string;
+    urlToImage: string;
     publishedAt: Date;
-    content:     string;
-    image:       string;
-    date:        Date;
-    authors:     AuthorNewsApiOrg[];
+    content: string;
+    image: string;
+    date: Date;
+    authors: AuthorNewsApiOrg[];
 }
 
 export interface AuthorNewsApiOrg {
@@ -57,29 +59,30 @@ export interface AuthorNewsApiOrg {
 }
 
 export interface SourceNewsApiOrg {
-    id:   null;
+    id: null;
     name: string;
 }
 
 // -------------------------------------------------------
 
 export interface GuardianApi {
-    id:                 string | number;
-    type:               string;
-    sectionId:          string;
-    sectionName:        string;
+    id: string | number;
+    apiSource: string;
+    type: string;
+    sectionId: string;
+    sectionName: string;
     webPublicationDate: Date;
-    webTitle:           string;
-    webUrl:             string;
-    apiUrl:             string;
-    elements:           Element[];
-    isHosted:           boolean;
-    pillarId:           string;
-    pillarName:         string;
-    title:              string;
-    image:              string;
-    date:               Date;
-    authors:            AuthorGuardianApi[];
+    webTitle: string;
+    webUrl: string;
+    apiUrl: string;
+    elements: Element[];
+    isHosted: boolean;
+    pillarId: string;
+    pillarName: string;
+    title: string;
+    image: string;
+    date: Date;
+    authors: AuthorGuardianApi[];
 }
 
 export interface AuthorGuardianApi {
@@ -87,29 +90,29 @@ export interface AuthorGuardianApi {
 }
 
 export interface Element {
-    id:       string;
+    id: string;
     relation: string;
-    type:     string;
-    assets:   Asset[];
+    type: string;
+    assets: Asset[];
 }
 
 export interface Asset {
-    type:      string;
+    type: string;
     mimeType?: string;
-    file:      string;
-    typeData:  TypeData;
+    file: string;
+    typeData: TypeData;
 }
 
 export interface TypeData {
-    altText:       string;
-    caption?:      string;
-    credit:        string;
-    photographer:  string;
-    source:        string;
-    width:         string;
-    height:        string;
-    secureFile:    string;
+    altText: string;
+    caption?: string;
+    credit: string;
+    photographer: string;
+    source: string;
+    width: string;
+    height: string;
+    secureFile: string;
     displayCredit: string;
-    mediaId:       string;
-    imageType:     string;
+    mediaId: string;
+    imageType: string;
 }

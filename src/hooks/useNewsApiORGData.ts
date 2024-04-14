@@ -8,14 +8,20 @@ import { useCallback } from 'react';
 type FetchedDataFilters = {
     categoryQuery: string;
     dateRange: DatesPicker;
+    sourceQuery:string[];
 }
 
-export const useNewsApiORGData = ({ categoryQuery, dateRange }: FetchedDataFilters, onSuccess, onError) => {
+export const useNewsApiORGData = ({ categoryQuery, dateRange, sourceQuery }: FetchedDataFilters, onSuccess, onError) => {
+
     const fetchData = useCallback(async () => {
+        if (sourceQuery.findIndex((val) => val === "Newsapi.org") === -1) {
+            return []; // Return an empty array if Newsapi.org source is not selected
+        }
         const queryParams = new URLSearchParams();
         queryParams.append('sortBy', 'publishedAt');
         queryParams.append('pageSize', 30);
-        queryParams.append('apiKey', '6c468c562cf549a49ef873831ae464e0');
+        // queryParams.append('apiKey', '6c468c562cf549a49ef873831ae464e0');
+        queryParams.append('apiKey', '1feb2b7b8f3b4b989861ec727443fa63');
         queryParams.append('q', categoryQuery);
         if (dateRange.startDate && dateRange.endDate) {
             queryParams.append('from', dateRange.startDate);
@@ -27,12 +33,13 @@ export const useNewsApiORGData = ({ categoryQuery, dateRange }: FetchedDataFilte
         const final = result.map((item) => ({
             ...item,
             id: (item.url === "" || item.url === 'https://removed.com') ? Math.random() : item.url,
+            apiSource: "Newsapi.org",
             image: item.urlToImage || noImage,
             date: formatDate(item.publishedAt) || '',
             authors: [{ name: item.author || '' }]
         }));
         return final;
-    }, [categoryQuery, dateRange]);
+    }, [categoryQuery, dateRange, sourceQuery]);
 
-    return useQuery(['newsData2', categoryQuery, dateRange], fetchData, { onSuccess, onError });
+    return useQuery(['newsData2', categoryQuery, dateRange, sourceQuery], fetchData, { onSuccess, onError });
 };

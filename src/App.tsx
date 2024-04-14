@@ -14,14 +14,14 @@ const queryClient = new QueryClient();
 function App() {
     return (
         <Container maxWidth="lg" sx={{padding: 0, minHeight: "100vh", backgroundColor: "steelblue"}}>
-            <QueryClientProvider client={queryClient}>
-                <Provider store={store}>
+            <Provider store={store}>
+                <QueryClientProvider client={queryClient}>
                     <ThemeProvider theme={theme}>
                         <Header/>
                         <RoutesPath/>
                     </ThemeProvider>
-                </Provider>
-            </QueryClientProvider>
+                </QueryClientProvider>
+            </Provider>
         </Container>
     )
 }

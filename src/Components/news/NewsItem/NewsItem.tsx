@@ -1,4 +1,4 @@
-import {useState, useEffect, memo, useMemo, useCallback} from 'react';
+import React, {useState, useEffect, memo, useMemo, useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from "../../../hooks/useStore";
 import {selectedItems} from "../../../store/news-slice";
 import Checkbox from '@mui/material/Checkbox';
@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import {Article, NewsApiOrg , GuardianApi} from '../../../interface/NewsType';
 import "./newsItem.css";
 import useFilteredNews from "../../../hooks/useFilteredNews";
+import {useLocation} from "react-router-dom";
 
 interface Props {
     items: 'allNews' | 'selectedNews'; // Specify the type of items
@@ -17,12 +18,14 @@ interface Props {
 type APITypes = Article | NewsApiOrg | GuardianApi
 
 const NewsItem = memo(({items}: Props) => {
+    const location = useLocation();
     const selectedNews = useAppSelector(state => state.news.selectedArticles);
     const [checkedItems, setCheckedItems] = useState<APITypes[]>(selectedNews || []);
 
     const allNews = useAppSelector(state => state.news.articles);
     const searchQuery = useAppSelector(state => state.filtered.letters);
     const categoryQuery = useAppSelector(state => state.filtered.subject);
+    const sourceQuery = useAppSelector(state => state.filtered.source);
 
     const dispatch = useAppDispatch();
 
@@ -31,10 +34,10 @@ const NewsItem = memo(({items}: Props) => {
         if (items === "allNews") {
             return useFilteredNews(allNews, searchQuery);
         } else if (items === "selectedNews") {
-            return useFilteredNews(selectedNews, searchQuery, categoryQuery);
+            return useFilteredNews(selectedNews, searchQuery, categoryQuery, sourceQuery);
         }
         return [];
-    }, [items, searchQuery, categoryQuery, allNews, selectedNews]);
+    }, [items, searchQuery, categoryQuery, sourceQuery, allNews, selectedNews]);
 
     // Dispatch selected items
     useEffect(() => {
@@ -54,14 +57,13 @@ const NewsItem = memo(({items}: Props) => {
     }, [categoryQuery, checkedItems]);
 
     return (
-        <Box sx={{flexGrow: 1, marginTop: "80px", backgroundColor:"steelblue"}}>
-            <Grid container spacing={2} sx={{mx:0}}>
-                {!articles.length ? (
-                    <Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No item is selected.</Typography>
+        <Box sx={{flexGrow: 1, marginTop: "64px", backgroundColor:"steelblue"}}>
+            <Grid container spacing={2} sx={{m:0}}>
+                {!articles.length ?  ( location.pathname === "/" ? (<Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No data is still fetched.</Typography>) : (<Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No item is selected.</Typography>)
                     ) : (
                 articles.map((article) => (
                     <Grid xs={12} sm={6} md={4} lg={3} key={article.id} item
-                          sx={{display: 'flex', justifyContent: 'center'}}>
+                          sx={{display: 'flex', justifyContent: 'center', px: 2}}>
                         <FormControlLabel
                             sx={{m:0}}
                             control={

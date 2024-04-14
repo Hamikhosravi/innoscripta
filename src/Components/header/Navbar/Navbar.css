@@ -1,5 +1,12 @@
 @media screen and (max-width: 600px) {
-    .filter {
-        display: none !important; /* Hide the Navbar Filter on mobile */
+    .categoryFilterDisplay {
+        display: none !important; /* Hide the Navbar category Filter on mobile */
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+    .sourceFilterDisplay {
+        display: none !important; /* Hide the Navbar source Filter on mobile */
     }
 }

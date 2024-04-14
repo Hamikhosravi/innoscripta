@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useAppDispatch } from "../../../hooks/useStore";
 import { selectedSubject } from "../../../store/filtered-slice";
 
-const Filter= memo(({className}:string) => {
+const CategoryFilter= memo(({className}:string) => {
     const dispatch = useAppDispatch();
     const [category, setCategory] = useState('Arts');
     const location = useLocation();
@@ -46,4 +46,4 @@ const Filter= memo(({className}:string) => {
     );
 });
 
-export default Filter;
+export default CategoryFilter;

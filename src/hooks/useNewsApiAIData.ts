@@ -7,10 +7,15 @@ import { useCallback } from 'react';
 type FetchedDataFilters = {
     categoryQuery: string;
     dateRange: DatesPicker;
+    sourceQuery:string[];
 }
 
-export const useNewsApiAIData = ({ categoryQuery, dateRange }: FetchedDataFilters, onSuccess, onError) => {
+export const useNewsApiAIData = ({ categoryQuery, dateRange, sourceQuery }: FetchedDataFilters, onSuccess, onError) => {
+
     const fetchData = useCallback(async () => {
+        if (sourceQuery.findIndex((val) => val === "Newsapi.ai") === -1) {
+            return []; // Return an empty array if Newsapi.ai source is not selected
+        }
         const newsApiPost = {
             "query": {
                 "$query": {
@@ -27,7 +32,8 @@ export const useNewsApiAIData = ({ categoryQuery, dateRange }: FetchedDataFilter
             },
             "resultType": "articles",
             "articlesSortBy": "date",
-            "apiKey": "846d1bd4-02ac-4b66-9baf-e5ab0f9be0e7"
+            // "apiKey": "846d1bd4-02ac-4b66-9baf-e5ab0f9be0e7"
+            "apiKey": "25aab9be-f57a-4e4e-a94d-07ffdecca08c"
         };
         if (dateRange.startDate) {
             newsApiPost.query.$query.$and.push({
@@ -46,10 +52,11 @@ export const useNewsApiAIData = ({ categoryQuery, dateRange }: FetchedDataFilter
         const final = result.slice(0, 30).map((item) => ({
             ...item,
             id: (item.uri === "" || item.uri === 'https://removed.com') ? Math.random() : item.uri,
+            apiSource: "Newsapi.ai",
             image: item.image || noImage,
         }));
         return final;
-    }, [categoryQuery, dateRange]);
+    }, [categoryQuery, dateRange, sourceQuery]);
 
-    return useQuery(['newsData', categoryQuery, dateRange], fetchData, { onSuccess, onError });
+    return useQuery(['newsData', categoryQuery, dateRange, sourceQuery], fetchData, { onSuccess, onError });
 };

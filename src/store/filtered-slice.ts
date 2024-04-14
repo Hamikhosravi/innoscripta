@@ -5,13 +5,15 @@ import {DatesPicker} from "../Type/DatesPicker";
 type Filter = {
     letter: string;
     subject: string;
+    source: string[];
     dates: DatesPicker
 }
 
 const initialState: Filter = {
     letters: "",
-    subject:"Arts",
-    dates:{}
+    subject: "Arts",
+    source: ["Newsapi.ai","Newsapi.org", "Guardian"],
+    dates: {}
 };
 
 export const filteredSlice = createSlice({
@@ -30,6 +32,12 @@ export const filteredSlice = createSlice({
         ) {
             state.subject = action.payload
         },
+        selectedSource(
+            state,
+            action: PayloadAction<string>
+        ) {
+            state.source = action.payload
+        },
         pickedDates(
             state,
             action: PayloadAction<DatesPicker>
@@ -39,4 +47,4 @@ export const filteredSlice = createSlice({
     }
 });
 
-export const {searchBox, selectedSubject, pickedDates} = filteredSlice.actions;
+export const {searchBox, selectedSubject, selectedSource, pickedDates} = filteredSlice.actions;

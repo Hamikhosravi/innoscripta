@@ -3,8 +3,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import Filter from "../CategoryFilter/Filter";
+import CategoryFilter from "../CategoryFilter/CategoryFilter";
 import {useNavigate, useLocation} from "react-router-dom";
+import SourceFilter from "../SourceFilter/SourceFilter";
 
 const HamburgerMenu = memo(() => {
     const location = useLocation();
@@ -53,9 +54,13 @@ const HamburgerMenu = memo(() => {
                         Customized News Page
                     </MenuItem>
                 )}
-                {/* Render the Filter component as a menu item only on mobile devices */}
+                {/* Render the CategoryFilter component as a menu item only on mobile devices */}
                 <MenuItem sx={{display: {xs: "block", sm: "none"}}}>
-                    <Filter />
+                    <CategoryFilter />
+                </MenuItem>
+                {/* Render the SourceFilter component as a menu item only on mobile devices */}
+                <MenuItem sx={{display: {xs: "block", md: "none"}}}>
+                    <SourceFilter />
                 </MenuItem>
             </Menu>
         </>

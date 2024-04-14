@@ -4,7 +4,8 @@ import Toolbar from '@mui/material/Toolbar';
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import SearchBox from "../SearchBox/SearchBox";
 import DateRangePickerWithIcon from "../DatePicker/DatePicker"
-import Filter from "../CategoryFilter/Filter";
+import CategoryFilter from "../CategoryFilter/CategoryFilter";
+import SourceFilter from "../SourceFilter/SourceFilter";
 import "./Navbar.css"
 import {useLocation} from "react-router-dom";
 import React, {memo} from "react";
@@ -30,7 +31,8 @@ const Header = memo(() => {
                     <Box sx={{flexGrow: 1}}/>
                     {showDatePicker && <DateRangePickerWithIcon/>}
                     <SearchBox/>
-                    <Filter className="filter"/>
+                    <CategoryFilter className="categoryFilterDisplay"/>
+                    <SourceFilter className="sourceFilterDisplay"/>
                 </Toolbar>
             </AppBar>
         </Box>
