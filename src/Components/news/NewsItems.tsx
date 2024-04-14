@@ -36,7 +36,7 @@ const NewsItems = memo(() => {
 
     useEffect(() => {
         if (firstApiData && secondApiData && thirdApiData) {
-            const allData = firstApiData.concat(secondApiData, thirdApiData)
+            const allData = firstApiData.concat(secondApiData, thirdApiData);
             dispatch(pushNews(allData));
         }
     }, [firstApiData, secondApiData, thirdApiData, dispatch]);
