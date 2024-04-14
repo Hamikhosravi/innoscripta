@@ -1,15 +1,16 @@
 import { useQuery } from "react-Query";
 import { newsApiRequest } from '../utility/axios-utils';
-import {DatePicker} from '../interface/DatesPicker'
+import { DatesPicker } from '../interface/DatesPicker';
 import noImage from "../assets/noImage.jpg";
+import { useCallback } from 'react';
 
-type fetchedDataFilters = {
+type FetchedDataFilters = {
     categoryQuery: string;
-    dateRange: DatePicker
+    dateRange: DatesPicker;
 }
 
-export const useNewsApiAIData = ({categoryQuery,dateRange}:fetchedDataFilters, onSuccess, onError) => {
-    const fetchData = async () => {
+export const useNewsApiAIData = ({ categoryQuery, dateRange }: FetchedDataFilters, onSuccess, onError) => {
+    const fetchData = useCallback(async () => {
         const newsApiPost = {
             "query": {
                 "$query": {
@@ -40,7 +41,7 @@ export const useNewsApiAIData = ({categoryQuery,dateRange}:fetchedDataFilters, o
         }
 
         const response = await newsApiRequest({ url: '/', method: 'POST', data: newsApiPost });
-        const result =  response.data.articles.results;
+        const result = response.data.articles.results;
         // This Api fetch 100 items and doesn't have any page-size parameter to specify the number of fetch, thus I use slice method
         const final = result.slice(0, 30).map((item) => ({
             ...item,
@@ -48,7 +49,7 @@ export const useNewsApiAIData = ({categoryQuery,dateRange}:fetchedDataFilters, o
             image: item.image || noImage,
         }));
         return final;
-    };
+    }, [categoryQuery, dateRange]);
 
-    return useQuery(['newsData', categoryQuery, dateRange], fetchData, {onSuccess, onError});
+    return useQuery(['newsData', categoryQuery, dateRange], fetchData, { onSuccess, onError });
 };

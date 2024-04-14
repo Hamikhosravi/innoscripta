@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -10,7 +10,7 @@ import { pickedDates } from "../../../store/filtered-slice";
 import formatDate from "../../../plugins/changeDateFormat";
 import "./DatePicker.css"
 
-const DateRangePickerWithIcon = () => {
+const DateRangePickerWithIcon = memo(() => {
     const dispatch = useAppDispatch();
     const [showModal, setShowModal] = useState(false);
     const [dateRange, setDateRange] = useState([
@@ -28,10 +28,6 @@ const DateRangePickerWithIcon = () => {
     const handleSelect = (ranges) => {
         // Update state with selected date range
         setDateRange([ranges.selection]);
-        // Do not close the modal after selecting dates
-        // setShowModal(false);
-        // Handle the date change
-        console.log('Selected date range:', ranges.selection);
     };
 
     const closeModal = () => {
@@ -82,6 +78,6 @@ const DateRangePickerWithIcon = () => {
             </Modal>
         </div>
     );
-};
+});
 
 export default DateRangePickerWithIcon;

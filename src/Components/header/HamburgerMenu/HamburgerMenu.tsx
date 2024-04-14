@@ -1,13 +1,12 @@
-import {useState} from "react";
+import React, {useState, memo} from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Filter from "../CategoryFilter/Filter";
 import {useNavigate, useLocation} from "react-router-dom";
-import TextField from "@mui/material/TextField";
 
-export default function HamburgerMenu() {
+const HamburgerMenu = memo(() => {
     const location = useLocation();
     const history = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -33,7 +32,7 @@ export default function HamburgerMenu() {
                 aria-label="open drawer"
                 sx={{
                     mr: 2,
-                    '&:focus': { outline: "unset" }
+                    '&:focus': {outline: "unset"}
                 }}
                 onClick={handleMenuOpen}
             >
@@ -56,9 +55,10 @@ export default function HamburgerMenu() {
                 )}
                 {/* Render the Filter component as a menu item only on mobile devices */}
                 <MenuItem sx={{display: {xs: "block", sm: "none"}}}>
-                    <Filter/>
+                    <Filter />
                 </MenuItem>
             </Menu>
         </>
     );
-}
+});
+export default HamburgerMenu;

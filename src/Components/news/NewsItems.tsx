@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import React, {useEffect, memo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/useStore';
 import {pushNews} from '../../store/news-slice';
 import {useNewsApiAIData} from '../../hooks/useNewsApiAIData';
@@ -7,27 +7,27 @@ import {useGuardianApiData} from "../../hooks/useGuardianApiData";
 import NewsItem from './NewsItem/NewsItem';
 import LinearProgress from '@mui/material/LinearProgress';
 
-export default function NewsItems() {
+const NewsItems = memo(() => {
     const dispatch = useAppDispatch();
     const categoryQuery = useAppSelector(state => state.filtered.subject); // Get categoryQuery from the store
     const dateRange = useAppSelector(state => state.filtered.dates); // Get datesPicker from the store
 
-    const onSuccess1 = (firstApiData) => console.log("fetched first Data", firstApiData);
-    const onError1 = (error) => console.log(error.message);
+    const onSuccess1 = () => console.log("FirstApiData is completely fetched.");
+    const onError1 = () => console.log("Error on fetching firstApiData.");
     const {isLoading: firstLoading, data: firstApiData} = useNewsApiAIData({
         categoryQuery,
         dateRange
     }, onSuccess1, onError1); // Pass categoryQuery and dateRange to useNewsApiAIData
 
-    const onSuccess2 = (secondApiData) => console.log("fetched second Data", secondApiData);
-    const onError2 = (error) => console.log(error.message);
+    const onSuccess2 = () => console.log("SecondApiData is completely fetched.");
+    const onError2 = () => console.log("Error on fetching secondApiData.");
     const {isLoading: secondLoading, data: secondApiData} = useNewsApiORGData({
         categoryQuery,
         dateRange
     }, onSuccess2, onError2); // Pass categoryQuery and dateRange to useNewsApiORGData
 
-    const onSuccess3 = (thirdApiData) => console.log("fetched third Data", thirdApiData);
-    const onError3 = (error) => console.log(error.message);
+    const onSuccess3 = () => console.log("ThirdApiData is completely fetched.");
+    const onError3 = () => console.log("Error on fetching thirdApiData.");
     const {isLoading: thirdLoading, data: thirdApiData} = useGuardianApiData({
         categoryQuery,
         dateRange
@@ -37,7 +37,6 @@ export default function NewsItems() {
     useEffect(() => {
         if (firstApiData && secondApiData && thirdApiData) {
             const allData = firstApiData.concat(secondApiData, thirdApiData)
-            console.log("all 3 apis", allData)
             dispatch(pushNews(allData));
         }
     }, [firstApiData, secondApiData, thirdApiData, dispatch]);
@@ -48,4 +47,6 @@ export default function NewsItems() {
             {(firstApiData || secondApiData || thirdApiData) && <NewsItem items="allNews"/>}
         </>
     );
-}
+});
+
+export default NewsItems

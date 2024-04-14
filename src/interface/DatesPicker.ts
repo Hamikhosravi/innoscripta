@@ -1,4 +1,4 @@
-export type DatesPicker = {
+export interface DatesPicker {
     startDate?: string;
     endDate?: string;
 }

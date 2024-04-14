@@ -38,6 +38,7 @@ interface Source {
 // ------------------------------------------
 
 export interface NewsApiOrg {
+    id:          string | number;
     source:      SourceNewsApiOrg;
     author:      string;
     title:       string;
@@ -46,7 +47,6 @@ export interface NewsApiOrg {
     urlToImage:  string;
     publishedAt: Date;
     content:     string;
-    id:          string | number;
     image:       string;
     date:        Date;
     authors:     AuthorNewsApiOrg[];

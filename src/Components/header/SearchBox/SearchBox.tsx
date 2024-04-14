@@ -1,11 +1,11 @@
-import {useState} from 'react';
+import React, {useState, memo} from 'react';
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import {useAppDispatch} from "../../../hooks/useStore";
 import {searchBox} from "../../../store/filtered-slice";
 
-export default function SearchBox() {
+const SearchBox = memo(() => {
     const [searchInput, setSearchInput] = useState<string>("");
     const dispatch = useAppDispatch();
 
@@ -42,4 +42,6 @@ export default function SearchBox() {
             value={searchInput}
         />
     );
-}
+});
+
+export default SearchBox;

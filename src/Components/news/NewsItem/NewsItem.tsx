@@ -1,4 +1,4 @@
-import {useState, useEffect, memo, useMemo} from 'react';
+import {useState, useEffect, memo, useMemo, useCallback} from 'react';
 import {useAppDispatch, useAppSelector} from "../../../hooks/useStore";
 import {selectedItems} from "../../../store/news-slice";
 import Checkbox from '@mui/material/Checkbox';
@@ -42,7 +42,7 @@ const NewsItem = memo(({items}: Props) => {
     }, [checkedItems, dispatch]);
 
     // Handle checkbox change
-    const handleChange = (article: APITypes) => {
+    const handleChange = useCallback((article: APITypes) => {
         const articleIndex = checkedItems.findIndex((item) => item.id === article.id);
         if (articleIndex === -1) {
             setCheckedItems([...checkedItems, {...article, category: categoryQuery}]);
@@ -51,12 +51,15 @@ const NewsItem = memo(({items}: Props) => {
             updatedCheckedItems.splice(articleIndex, 1);
             setCheckedItems(updatedCheckedItems);
         }
-    };
+    }, [categoryQuery, checkedItems]);
 
     return (
         <Box sx={{flexGrow: 1, marginTop: "80px", backgroundColor:"steelblue"}}>
-            <Grid container spacing={2}>
-                {articles.map((article) => (
+            <Grid container spacing={2} sx={{mx:0}}>
+                {!articles.length ? (
+                    <Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No item is selected.</Typography>
+                    ) : (
+                articles.map((article) => (
                     <Grid xs={12} sm={6} md={4} lg={3} key={article.id} item
                           sx={{display: 'flex', justifyContent: 'center'}}>
                         <FormControlLabel
@@ -99,7 +102,7 @@ const NewsItem = memo(({items}: Props) => {
                             }
                         />
                     </Grid>
-                ))}
+                )))}
             </Grid>
         </Box>
     );

@@ -1,16 +1,17 @@
-import {useQuery} from "react-Query";
-import {newsApiRequest2} from '../utility/axios-utils';
-import {DatePicker} from '../interface/DatesPicker';
+import { useQuery } from "react-Query";
+import { newsApiRequest2 } from '../utility/axios-utils';
+import { DatesPicker } from '../interface/DatesPicker';
 import formatDate from "../plugins/changeDateFormat";
-import noImage from "../assets/noImage.jpg"
+import noImage from "../assets/noImage.jpg";
+import { useCallback } from 'react';
 
 type FetchedDataFilters = {
     categoryQuery: string;
-    dateRange: DatePicker;
+    dateRange: DatesPicker;
 }
 
-export const useNewsApiORGData = ({categoryQuery, dateRange}: FetchedDataFilters, onSuccess, onError) => {
-    const fetchData = async () => {
+export const useNewsApiORGData = ({ categoryQuery, dateRange }: FetchedDataFilters, onSuccess, onError) => {
+    const fetchData = useCallback(async () => {
         const queryParams = new URLSearchParams();
         queryParams.append('sortBy', 'publishedAt');
         queryParams.append('pageSize', 30);
@@ -21,18 +22,17 @@ export const useNewsApiORGData = ({categoryQuery, dateRange}: FetchedDataFilters
             queryParams.append('to', dateRange.endDate);
         }
         const queryString = queryParams.toString();
-        const response = await newsApiRequest2({url: `/everything?${queryString}`});
+        const response = await newsApiRequest2({ url: `/everything?${queryString}` });
         const result = response.data.articles;
         const final = result.map((item) => ({
             ...item,
             id: (item.url === "" || item.url === 'https://removed.com') ? Math.random() : item.url,
             image: item.urlToImage || noImage,
             date: formatDate(item.publishedAt) || '',
-            authors: [{name: item.author || ''}]
+            authors: [{ name: item.author || '' }]
         }));
-        console.log("final2", final);
         return final;
-    };
+    }, [categoryQuery, dateRange]);
 
-    return useQuery(['newsData2', categoryQuery, dateRange], fetchData, {onSuccess, onError});
+    return useQuery(['newsData2', categoryQuery, dateRange], fetchData, { onSuccess, onError });
 };

@@ -1,16 +1,17 @@
-import {useQuery} from "react-Query";
-import {newsApiRequest3} from '../utility/axios-utils';
-import {DatePicker} from '../interface/DatesPicker';
+import { useQuery } from "react-Query";
+import { newsApiRequest3 } from '../utility/axios-utils';
+import { DatesPicker } from '../interface/DatesPicker';
 import formatDate from "../plugins/changeDateFormat";
-import noImage from "../assets/noImage.jpg"
+import noImage from "../assets/noImage.jpg";
+import { useCallback } from 'react';
 
 type FetchedDataFilters = {
     categoryQuery: string;
-    dateRange: DatePicker;
+    dateRange: DatesPicker;
 }
 
 export const useGuardianApiData = ({categoryQuery, dateRange}: FetchedDataFilters, onSuccess, onError) => {
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         const queryParams = new URLSearchParams();
         queryParams.append('q', categoryQuery);
         queryParams.append('api-key', '1c8b7f77-5f51-4726-aebb-eb02bf39e81f');
@@ -25,18 +26,17 @@ export const useGuardianApiData = ({categoryQuery, dateRange}: FetchedDataFilter
         const queryString = queryParams.toString();
         const response = await newsApiRequest3({url: `/search?${queryString}`});
         const result = response.data.response.results;
-        console.log("res",result)
         const final = result.map((item) => ({
             ...item,
             id: (item.id === "" || item.id === 'https://removed.com') ? Math.random() : item.id,
             title: item.webTitle || '',
-            image: item.elements[0]?.assets[0]?.file || noImage,
+            image: item.elements && item.elements[0]?.assets && item.elements[0]?.assets[0]?.file ? item.elements[0].assets[0].file : noImage,
             date: formatDate(item.webPublicationDate) || '',
             authors: [{name: item.sectionName || ''}]
         }));
-        console.log("final33333", final);
         return final;
-    };
+    }, [categoryQuery, dateRange]);
 
     return useQuery(['newsData3', categoryQuery, dateRange], fetchData, {onSuccess, onError});
 };
+

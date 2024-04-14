@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React ,{ useState, useEffect, memo } from 'react';
 import { useLocation } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useAppDispatch } from "../../../hooks/useStore";
 import { selectedSubject } from "../../../store/filtered-slice";
 
-export default function Filter({className}:string) {
+const Filter= memo(({className}:string) => {
     const dispatch = useAppDispatch();
     const [category, setCategory] = useState('Arts');
     const location = useLocation();
@@ -44,4 +44,6 @@ export default function Filter({className}:string) {
             </Select>
         </FormControl>
     );
-}
+});
+
+export default Filter;
