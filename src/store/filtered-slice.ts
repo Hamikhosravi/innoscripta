@@ -12,7 +12,7 @@ type Filter = {
 const initialState: Filter = {
     letters: "",
     subject: "Arts",
-    source: ["Newsapi.ai","Newsapi.org", "Guardian"],
+    source: ["Newsapi.ai", "Guardian"],
     dates: {}
 };
 

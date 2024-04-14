@@ -30,7 +30,8 @@ const newsApiClient2 = axios.create({
     headers: {
         'Authorization': 'Bearer Token',
         'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true  // Include this option
 });
 
 export const newsApiRequest2 = ({...options}) => {
@@ -40,6 +41,7 @@ export const newsApiRequest2 = ({...options}) => {
     };
     return newsApiClient2(options).then(onSuccess).catch(onError)
 };
+
 
 // -------------------------------------------------------------------------------------------------------------
 

@@ -9,7 +9,7 @@ import { selectedSource } from "../../../store/filtered-slice";
 
 const SourceFilter= memo(({className}:string) => {
     const dispatch = useAppDispatch();
-    const [source, setSource] = useState(["Newsapi.ai","Newsapi.org", "Guardian"]);
+    const [source, setSource] = useState(["Newsapi.ai", "Guardian"]);
 
     const handleChange = (event: SelectChangeEvent) => {
         setSource(event.target.value);
