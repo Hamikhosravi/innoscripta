@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {Article, NewYorkTimes , GuardianApi} from '../interface/NewsType';
+import {Article, NewYorkTimes , GuardianApi, NewsApiOrg} from '../interface/NewsType';
 
-type APITypes = Article | NewYorkTimes | GuardianApi
+type APITypes = Article | NewYorkTimes | GuardianApi | NewsApiOrg
 
 interface NewsState {
     articles: APITypes[];

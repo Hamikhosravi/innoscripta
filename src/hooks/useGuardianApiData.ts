@@ -20,7 +20,7 @@ export const useGuardianApiData = ({categoryQuery, dateRange, sourceQuery}: Fetc
         queryParams.append('q', categoryQuery);
         queryParams.append('api-key', '1c8b7f77-5f51-4726-aebb-eb02bf39e81f');
         queryParams.append('order-by', 'newest');
-        queryParams.append('page-size', 30);
+        queryParams.append('page-size', 10);
         queryParams.append('show-elements', 'image');
 
         if (dateRange.startDate && dateRange.endDate) {

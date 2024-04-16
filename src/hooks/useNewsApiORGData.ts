@@ -1,5 +1,5 @@
 import { useQuery } from "react-Query";
-import { newsApiRequest2 } from '../utility/axios-utils';
+import { newsApiRequest4 } from '../utility/axios-utils';
 import { DatesPicker } from '../interface/DatesPicker';
 import formatDate from "../plugins/changeDateFormat";
 import noImage from "../assets/noImage.jpg";
@@ -19,7 +19,7 @@ export const useNewsApiORGData = ({ categoryQuery, dateRange, sourceQuery }: Fet
         }
         const queryParams = new URLSearchParams();
         queryParams.append('sortBy', 'publishedAt');
-        queryParams.append('pageSize', 30);
+        queryParams.append('pageSize', 10);
         // queryParams.append('apiKey', '6c468c562cf549a49ef873831ae464e0');
         queryParams.append('apiKey', '1feb2b7b8f3b4b989861ec727443fa63');
         queryParams.append('q', categoryQuery);
@@ -28,7 +28,7 @@ export const useNewsApiORGData = ({ categoryQuery, dateRange, sourceQuery }: Fet
             queryParams.append('to', dateRange.endDate);
         }
         const queryString = queryParams.toString();
-        const response = await newsApiRequest2({ url: `/everything?${queryString}` });
+        const response = await newsApiRequest4({ url: `/everything?${queryString}` });
         const result = response.data.articles;
         const final = result.map((item) => ({
             ...item,
@@ -41,5 +41,5 @@ export const useNewsApiORGData = ({ categoryQuery, dateRange, sourceQuery }: Fet
         return final;
     }, [categoryQuery, dateRange, sourceQuery]);
 
-    return useQuery(['newsData2', categoryQuery, dateRange, sourceQuery], fetchData, { onSuccess, onError });
+    return useQuery(['newsData4', categoryQuery, dateRange, sourceQuery], fetchData, { onSuccess, onError });
 };

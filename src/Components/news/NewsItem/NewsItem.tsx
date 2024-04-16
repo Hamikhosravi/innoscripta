@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {Article, NewYorkTimes , GuardianApi} from '../../../interface/NewsType';
+import {Article, NewYorkTimes , GuardianApi, NewsApiOrg} from '../../../interface/NewsType';
 import "./newsItem.css";
 import useFilteredNews from "../../../hooks/useFilteredNews";
 import {useLocation} from "react-router-dom";
@@ -15,7 +15,7 @@ interface Props {
     items: 'allNews' | 'selectedNews'; // Specify the type of items
 }
 
-type APITypes = Article | NewYorkTimes | GuardianApi
+type APITypes = Article | NewYorkTimes | GuardianApi | NewsApiOrg
 
 const NewsItem = memo(({items}: Props) => {
     const location = useLocation();
@@ -93,7 +93,7 @@ const NewsItem = memo(({items}: Props) => {
                                 >
                                     <img src={article.image} alt={article.title} loading="lazy" className='newImage'/>
                                     <Box display="flex" sx={{flexDirection: 'column', overflow: "auto"}}>
-                                        <Typography variant="title" px={1}>{article.title}</Typography>
+                                        <Typography variant="title" px={1} color="primary">{article.title}</Typography>
                                         <Typography variant="subtitle" px={1}>Date: {article.date}</Typography>
                                         {article.authors[0]?.name &&
                                         <Typography variant="subtitle"

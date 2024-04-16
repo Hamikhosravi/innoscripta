@@ -2,6 +2,7 @@ import React, { useState, useEffect, memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { pushNews } from '../../store/news-slice';
 import { useNewsApiAIData } from '../../hooks/useNewsApiAIData';
+import { useNewsApiORGData} from "../../hooks/useNewsApiORGData";
 import { useGuardianApiData } from "../../hooks/useGuardianApiData";
 import {useNewYorkTimesData} from "../../hooks/useNewYorkTimesApiData";
 import NewsItem from './NewsItem/NewsItem';
@@ -30,24 +31,30 @@ const NewsItems = memo(() => {
     const onError3 = () => console.log("Error on fetching thirdApiData.");
     const { data: thirdApiData, isLoading: thirdLoading } = useGuardianApiData({ categoryQuery, dateRange, sourceQuery }, onSuccess3, onError3);
 
+    // Fetch data for fourth API
+    const onSuccess4 = () => console.log("FourthApiData is fetched.");
+    const onError4 = () => console.log("Error on fetching fourthApiData.");
+    const { data: fourthApiData, isLoading: fourthLoading } = useNewsApiORGData({ categoryQuery, dateRange, sourceQuery }, onSuccess4, onError4);
+
+
     useEffect(() => {
         // Set loading to true whenever any of the loading states change
-        setLoading(firstLoading || secondLoading || thirdLoading);
-    }, [firstLoading, secondLoading, thirdLoading]);
+        setLoading(firstLoading || secondLoading || thirdLoading || fourthLoading);
+    }, [firstLoading, secondLoading, thirdLoading, fourthLoading]);
 
     useEffect(() => {
         // Dispatch news data when all data has been fetched
         if (!loading) {
-            const allData = [...(firstApiData || []), ...(secondApiData || []), ...(thirdApiData || [])];
+            const allData = [...(firstApiData || []), ...(secondApiData || []), ...(thirdApiData || []), ...(fourthApiData || [])];
             console.log("all", allData);
             dispatch(pushNews(allData));
         }
-    }, [firstApiData, secondApiData, thirdApiData, loading, dispatch]);
+    }, [firstApiData, secondApiData, thirdApiData, fourthApiData, loading, dispatch]);
 
     return (
         <>
             {loading && <LinearProgress />}
-            {(firstApiData?.length || secondApiData?.length || thirdApiData?.length) && <NewsItem items="allNews" />}
+            {(firstApiData?.length || secondApiData?.length || thirdApiData?.length || fourthApiData?.length) && <NewsItem items="allNews" />}
         </>
     );
 });

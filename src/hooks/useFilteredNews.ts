@@ -1,6 +1,6 @@
-import {Article, NewYorkTimes , GuardianApi} from '../../interface/NewsType';
+import {Article, NewYorkTimes , GuardianApi, NewsApiOrg} from '../../interface/NewsType';
 
-type APITypes = Article | NewYorkTimes | GuardianApi
+type APITypes = Article | NewYorkTimes | GuardianApi | NewsApiOrg
 
 export default function useFilteredNews(articles:APITypes[] | undefined, searchQuery:sting, categoryQuery?: string, sourceQuery?: string[] ) {
     if (!articles || !Array.isArray(articles)) {

@@ -28,16 +28,14 @@ export const useNewYorkTimesData = ({ categoryQuery, dateRange, sourceQuery }: F
         queryParams.append('api-key', 'GvdfGTwo0A3mhOKtJBRqPrDFkUciEgwn');
 
         const queryString = queryParams.toString();
-        console.log("hi", queryString)
         const response = await newsApiRequest2({ url: `/articlesearch.json?${queryString}` });
-        console.log("resss",response)
-        const result = response.data.docs;
+        const result = response.data.response.docs;
         const final = result.map((item) => ({
             ...item,
             id: (item.uri === "" || item.uri === 'https://removed.com') ? Math.random() : item.uri,
             apiSource: "NewYorkTimes",
             title: item.headline?.main || '',
-            image: item.multimedia && item.multimedia[0]?.url ? item.multimedia[0]?.url : noImage,
+            image: noImage,
             date: formatDate(item.pub_date) || '',
             authors: [{ name: item.byline?.original || '' }]
         }));

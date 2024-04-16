@@ -39,6 +39,12 @@ interface Source {
 // ------------------------------------------
 
 export interface NewYorkTimes {
+    id: string | number;
+    title: string;
+    authors: GeneralAuthor[];
+    image: string;
+    apiSource: string;
+    date: Date;
     abstract:         string;
     web_url:          string;
     snippet:          string;
@@ -159,6 +165,7 @@ export enum TypeOfMaterial {
 
 export interface GuardianApi {
     id: string | number;
+    authors: Author[];
     apiSource: string;
     type: string;
     sectionId: string;
@@ -174,10 +181,10 @@ export interface GuardianApi {
     title: string;
     image: string;
     date: Date;
-    authors: AuthorGuardianApi[];
+    authors: GeneralAuthor[];
 }
 
-export interface AuthorGuardianApi {
+export interface GeneralAuthor {
     name: string;
 }
 
@@ -224,12 +231,9 @@ export interface NewsApiOrg {
     content: string;
     image: string;
     date: Date;
-    authors: AuthorNewsApiOrg[];
+    authors: GeneralAuthor[];
 }
 
-export interface AuthorNewsApiOrg {
-    name: string;
-}
 
 export interface SourceNewsApiOrg {
     id: null;

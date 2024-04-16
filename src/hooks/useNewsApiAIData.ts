@@ -49,7 +49,7 @@ export const useNewsApiAIData = ({ categoryQuery, dateRange, sourceQuery }: Fetc
         const response = await newsApiRequest({ url: '/', method: 'POST', data: newsApiPost });
         const result = response.data.articles.results;
         // This Api fetch 100 items and doesn't have any page-size parameter to specify the number of fetch, thus I use slice method
-        const final = result.slice(0, 30).map((item) => ({
+        const final = result.slice(0, 10).map((item) => ({
             ...item,
             id: (item.uri === "" || item.uri === 'https://removed.com') ? Math.random() : item.uri,
             apiSource: "Newsapi.ai",
