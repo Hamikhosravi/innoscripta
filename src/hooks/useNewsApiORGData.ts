@@ -20,8 +20,8 @@ export const useNewsApiORGData = ({ categoryQuery, dateRange, sourceQuery }: Fet
         const queryParams = new URLSearchParams();
         queryParams.append('sortBy', 'publishedAt');
         queryParams.append('pageSize', 10);
-        // queryParams.append('apiKey', '6c468c562cf549a49ef873831ae464e0');
-        queryParams.append('apiKey', '1feb2b7b8f3b4b989861ec727443fa63');
+        queryParams.append('apiKey', 'bff6ffb39e664e549de245858c9b136e');
+        // queryParams.append('apiKey', '1feb2b7b8f3b4b989861ec727443fa63');
         queryParams.append('q', categoryQuery);
         if (dateRange.startDate && dateRange.endDate) {
             queryParams.append('from', dateRange.startDate);
