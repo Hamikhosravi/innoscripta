@@ -2,8 +2,8 @@ import React, { useState, useEffect, memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 import { pushNews } from '../../store/news-slice';
 import { useNewsApiAIData } from '../../hooks/useNewsApiAIData';
-import { useNewsApiORGData } from '../../hooks/useNewsApiORGData';
 import { useGuardianApiData } from "../../hooks/useGuardianApiData";
+import {useNewYorkTimesData} from "../../hooks/useNewYorkTimesApiData";
 import NewsItem from './NewsItem/NewsItem';
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -23,7 +23,7 @@ const NewsItems = memo(() => {
     // Fetch data for second API
     const onSuccess2 = () => console.log("SecondApiData is fetched.");
     const onError2 = () => console.log("Error on fetching secondApiData.");
-    const { data: secondApiData, isLoading: secondLoading } = useNewsApiORGData({ categoryQuery, dateRange, sourceQuery }, onSuccess2, onError2);
+    const { data: secondApiData, isLoading: secondLoading } = useNewYorkTimesData({ categoryQuery, dateRange, sourceQuery }, onSuccess2, onError2);
 
     // Fetch data for third API
     const onSuccess3 = () => console.log("ThirdApiData is fetched.");

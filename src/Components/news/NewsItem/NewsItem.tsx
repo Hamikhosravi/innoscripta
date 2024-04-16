@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {Article, NewsApiOrg , GuardianApi} from '../../../interface/NewsType';
+import {Article, NewYorkTimes , GuardianApi} from '../../../interface/NewsType';
 import "./newsItem.css";
 import useFilteredNews from "../../../hooks/useFilteredNews";
 import {useLocation} from "react-router-dom";
@@ -15,7 +15,7 @@ interface Props {
     items: 'allNews' | 'selectedNews'; // Specify the type of items
 }
 
-type APITypes = Article | NewsApiOrg | GuardianApi
+type APITypes = Article | NewYorkTimes | GuardianApi
 
 const NewsItem = memo(({items}: Props) => {
     const location = useLocation();

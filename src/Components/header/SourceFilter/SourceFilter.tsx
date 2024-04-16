@@ -36,7 +36,7 @@ const SourceFilter= memo(({className}:string) => {
                 onChange={handleChange}
             >
                 <MenuItem value="Newsapi.ai">Newsapi.ai</MenuItem>
-                <MenuItem value="Newsapi.org">Newsapi.org</MenuItem>
+                <MenuItem value="New York Times">New York Times</MenuItem>
                 <MenuItem value="Guardian">Guardian</MenuItem>
             </Select>
         </FormControl>

@@ -23,15 +23,14 @@ export const newsApiRequest = ({...options}) => {
 
 // -------------------------------------------------------------------------------------------------------------
 
-// Second API for the Newsapi.org website
+// Second API for the nytimes.com website
 
 const newsApiClient2 = axios.create({
-    baseURL: 'https://newsapi.org/v2',
+    baseURL: 'https://api.nytimes.com/svc/search/v2',
     headers: {
         'Authorization': 'Bearer Token',
         'Content-Type': 'application/json'
     },
-    withCredentials: true  // Include this option
 });
 
 export const newsApiRequest2 = ({...options}) => {
@@ -62,3 +61,24 @@ export const newsApiRequest3 = ({...options}) => {
     };
     return newsApiClient3(options).then(onSuccess).catch(onError)
 };
+
+// -------------------------------------------------------------------------------------------------------------
+
+// Fourth API for the Newsapi.org website
+
+// const newsApiClient4 = axios.create({
+//     baseURL: 'https://newsapi.org/v2',
+//     headers: {
+//         'Authorization': 'Bearer Token',
+//         'Content-Type': 'application/json'
+//     },
+//     withCredentials: true  // Include this option
+// });
+//
+// export const newsApiRequest4 = ({...options}) => {
+//     const onSuccess = (response) => response;
+//     const onError = (error) => {
+//         return error;
+//     };
+//     return newsApiClient4(options).then(onSuccess).catch(onError)
+// };
