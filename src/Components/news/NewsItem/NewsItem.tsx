@@ -58,8 +58,8 @@ const NewsItem = memo(({items}: Props) => {
 
     return (
         <Box sx={{flexGrow: 1, marginTop: "64px", backgroundColor:"steelblue"}}>
-            <Grid container spacing={2} sx={{m:0}}>
-                {!articles.length ?  ( location.pathname === "/" ? (<Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No data is still fetched.</Typography>) : (<Typography variant="h4" sx={{mx:"auto", mt:6, color:"white"}}>No item is selected.</Typography>)
+            <Grid container spacing={2} sx={{m:0, width: "100%"}}>
+                {!articles.length ?  ( location.pathname === "/" ? (<Typography variant="h5" sx={{mx:"auto", mt:6, color:"white", px:1}}>No data is still fetched.</Typography>) : (<Typography variant="h5" sx={{mx:"auto", mt:6, color:"white", px:1}}>No item is selected.</Typography>)
                     ) : (
                 articles.map((article) => (
                     <Grid xs={12} sm={6} md={4} lg={3} key={article.id} item

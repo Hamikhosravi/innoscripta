@@ -26,7 +26,7 @@ const Header = memo(() => {
             transform: "translate(-50%)"
         }}>
             <AppBar position="static">
-                <Toolbar sx={{backgroundColor: "lightBlue", pt: 1}}>
+                <Toolbar sx={{backgroundColor: "lightBlue", pt: 1, minHeight: "64px"}}>
                     <HamburgerMenu/>
                     <Box sx={{flexGrow: 1}}/>
                     {showDatePicker && <DateRangePickerWithIcon/>}

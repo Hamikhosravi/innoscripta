@@ -4,15 +4,17 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useAppDispatch } from "../../../hooks/useStore";
+import {useAppDispatch, useAppSelector} from "../../../hooks/useStore";
 import { selectedSubject } from "../../../store/filtered-slice";
 
 const CategoryFilter= memo(({className}:string) => {
     const dispatch = useAppDispatch();
-    const [category, setCategory] = useState('Arts');
+    const [category, setCategory] = useState('');
     const location = useLocation();
+    const categoryQuery = useAppSelector(state => state.filtered.subject); // Get categoryQuery from the store
 
     useEffect(() => {
+        setCategory(categoryQuery);
         if (location.pathname === "/" && category === "All-Selected") {
             setCategory('Arts');
             dispatch(selectedSubject("Arts"));

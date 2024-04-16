@@ -1,19 +1,25 @@
 import React ,{ useState, useEffect, memo } from 'react';
-import { useLocation } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useAppDispatch } from "../../../hooks/useStore";
-import { selectedSource } from "../../../store/filtered-slice";
+import {useAppDispatch, useAppSelector} from "../../../hooks/useStore";
+import {selectedSource} from "../../../store/filtered-slice";
 
 const SourceFilter= memo(({className}:string) => {
     const dispatch = useAppDispatch();
-    const [source, setSource] = useState(["Newsapi.ai", "Guardian"]);
+    const [source, setSource] = useState([]);
+    const [open, setOpen] = useState(false); // State to control the menu open state
+    const sourceQuery = useAppSelector(state => state.filtered.source); // Get sourceQuery from the store
+
+    useEffect(() => {
+        setSource(sourceQuery);
+    }, []);
 
     const handleChange = (event: SelectChangeEvent) => {
         setSource(event.target.value);
         dispatch(selectedSource(event.target.value));
+        setOpen(false); // Close the menu after selection
     };
 
     return (
@@ -24,6 +30,9 @@ const SourceFilter= memo(({className}:string) => {
                 value={source}
                 label="Source"
                 multiple
+                open={open} // Control the menu open state
+                onOpen={() => setOpen(true)} // Open the menu
+                onClose={() => setOpen(false)} // Close the menu
                 onChange={handleChange}
             >
                 <MenuItem value="Newsapi.ai">Newsapi.ai</MenuItem>
