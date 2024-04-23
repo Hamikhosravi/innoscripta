@@ -14,7 +14,7 @@ CMD npm run dev
 
 #--------------------------------------------------------------------------------------------------------------------
 
-#After Pushing the project, you should go through the following steps to run the project throught Docker.
+#When you clone the project, you should go through the following steps to run the project throught Docker.
 
 #1- Install Docker on your system.
 
