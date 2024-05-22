@@ -5,12 +5,10 @@
 // export default defineConfig({
 //   plugins: [react()],
 // })
-
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-
+import reactRefresh from '@vitejs/plugin-react-refresh';
 export default defineConfig({
-    plugins: [react()],
+    plugins: [reactRefresh()],
     resolve: {
         alias: {
             '@': '/src',
@@ -21,8 +19,8 @@ export default defineConfig({
             output: {
                 entryFileNames: 'assets/[name].js',
                 chunkFileNames: 'assets/[name].js',
-                assetFileNames: 'assets/[name].[ext]',
-            },
-        },
-    },
+                assetFileNames: 'assets/[name].[ext]'
+            }
+        }
+    }
 });

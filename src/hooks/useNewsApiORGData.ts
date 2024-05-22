@@ -1,4 +1,4 @@
-import { useQuery } from "react-Query";
+import { useQuery } from "react-query";
 import { newsApiRequest4 } from '../utility/axios-utils';
 import { DatesPicker } from '../interface/DatesPicker';
 import formatDate from "../plugins/changeDateFormat";
